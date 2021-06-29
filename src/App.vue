@@ -1,28 +1,71 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Header @runClick="updateOutput"></Header>
+    <b-card-group>
+    
+          <b-card>
+            <AceEditor :run="isRun" @content="scriptContent"></AceEditor>
+          </b-card>
+        
+          <b-card>
+            <Output :scriptOpt="contentScript"></Output>
+          </b-card>
+        
+    </b-card-group>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header.vue'
+import AceEditor from './components/AceEditor.vue'
+import Output from './components/Output.vue'
 
 export default {
   name: 'App',
+  data:function(){
+    return{
+      isRun:false,
+      contentScript:``,
+    }
+  },
   components: {
-    HelloWorld
-  }
+    Header,
+    AceEditor,
+    Output,
+  },
+  methods:{
+    updateOutput:function(val){
+      this.isRun=val;
+    },
+    scriptContent:function(val){
+      this.contentScript=val;
+    }
+  },
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+body, html, #app {
+  height: 100% ;
+  overflow:hidden;
 }
+
+.card-group{
+  height:100%;
+  overflow:hidden;
+}
+.card{
+  height:100%;
+  margin:1%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+}
+
+@media screen and (max-width:500px){
+  .card{
+    height:50%;
+  }
+}
+
 </style>
